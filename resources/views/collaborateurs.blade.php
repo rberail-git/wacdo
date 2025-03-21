@@ -36,24 +36,18 @@
         <div class="row justify-content-center">
             <form method="post" action="{{url( "/collaborateurs" )}}">
                 @csrf
-                <div id="formFilter" @class(['row collapse','show' => isset($input)])>
+                <div id="formFilter" @class(['row collapse','show' => isset($input) | $errors->any()])>
                     <div class="row" style="padding-left:50px;">
 
                         <input type="hidden" name="mode" value="{{ $infos['mode'] }}"/>
-                        <div class="col-md-2"><input type="text" class="form-control" name="name" id="name" placeholder="Nom" value="{{ $input['name'] ?? '' }}"/>
-                            @error("name")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Nom" value="{{ $input['name'] ?? '' }}"/>
+
                         </div>
-                        <div class="col-md-2"><input type="text" class="form-control" name="firstname" id="firstname" placeholder="Prénom" value="{{ $input['firstname'] ?? '' }}"/>
-                            @error("firstname")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('firstname') is-invalid @enderror" name="firstname" id="firstname" placeholder="Prénom" value="{{ $input['firstname'] ?? '' }}"/>
+
                         </div>
-                        <div class="col-md-2"><input type="text" class="form-control" name="email" id="email" placeholder="Email" value="{{ $input['email'] ?? '' }}"/>
-                            @error("email")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Email" value="{{ $input['email'] ?? '' }}"/>
+
                         </div>
                         <div class="col-md-2"><button type="submit" class="btn btn-xs btn-success">Filtrer</button></div>
 
@@ -65,7 +59,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12">
 
             <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
+                <div class="card-body p-0 table-responsive">
                     <!-- Nested Row within Card Body -->
                     <div class="row" style="padding:20px;">
                         <table class="table table-hover">
@@ -103,7 +97,14 @@
                                             <span class="badge bg-success">{{ $restaurant->name }}</span>
                                         @endforeach
                                     </td>
-                                    <td><a href="{{ url('/collaborateurs/'.$user->id.'/edit')}}"><i class="fa-solid fa-pen"></i></a> <a href="{{ url('/collaborateurs/'.$user->id.'/delete')}}"><span style="color:red;padding-left:15px;"><i class="fa-solid fa-trash"></i></span></a></td>
+                                    <td>
+                                        @can('edit',$user)
+                                        <a href="{{ url('/collaborateurs/'.$user->id.'/edit')}}"><i class="fa-solid fa-pen"></i></a>
+                                        @endcan
+                                        @can('delete',$user)
+                                        <a href="{{ url('/collaborateurs/'.$user->id.'/delete')}}"><span style="color:red;padding-left:15px;"><i class="fa-solid fa-trash"></i></span></a>
+                                            @endcan
+                                    </td>
                                 </tr>
                             @endforeach
 

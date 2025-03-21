@@ -50,21 +50,10 @@ class RestaurantsController extends Controller
     {
         return view('newRestaurant');
     }
-    public function store(Request $request)
+    public function store(RestaurantUpdateRequest $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:'.Restaurants::class],
-            'adresse' => ['required'],
-            'code_postal' => ['required'],
-            'ville' => ['required'],
-        ]);
-            $restaurant = Restaurants::create([
-                'name' => $request->get('name'),
-                'adresse' => $request->get('adresse'),
-                'code_postal' => $request->get('code_postal'),
-                'ville' => $request->get('ville'),
 
-            ]);
+            $restaurant = Restaurants::create($request->validated());
 
         return redirect('/restaurants')->with('success','Le restaurant à bien été ajouté');
     }

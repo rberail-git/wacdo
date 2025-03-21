@@ -202,7 +202,7 @@ class AffectationsController extends Controller
 
     public function create()
     {
-        $users = User::all();
+        $users = User::where('role','!=','superadmin')->get();
         $restaurants = Restaurants::all();
         $fonctions = Fonctions::all();
         return view('newAffectation',[

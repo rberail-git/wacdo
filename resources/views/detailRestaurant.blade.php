@@ -129,24 +129,18 @@
         <div class="row justify-content-center">
             <form method="post" action="{{url( "/restaurants/".$restaurant->id."/detail" )}}">
                 @csrf
-                <div id="formFilter" @class(['row collapse','show' => isset($input)])>
+                <div id="formFilter" @class(['row collapse','show' => isset($input) | $errors->any()])>
                     <div class="row" style="padding-left:50px;">
 
                         <input type="hidden" name="mode" value="{{ $infos['mode'] }}"/>
-                        <div class="col-md-2"><input type="text" class="form-control" name="name" id="name" placeholder="Nom" value="{{ $input['name'] ?? '' }}"/>
-                            @error("name")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Nom" value="{{ $input['name'] ?? '' }}"/>
+
                         </div>
-                        <div class="col-md-2"><input type="text" class="form-control" name="fonction" id="fonction" placeholder="Poste" value="{{ $input['fonction'] ?? '' }}"/>
-                            @error("fonction")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('fonction') is-invalid @enderror" name="fonction" id="fonction" placeholder="Poste" value="{{ $input['fonction'] ?? '' }}"/>
+
                         </div>
-                        <div class="col-md-2"><input type="date" class="form-control" name="date_debut" id="date_debut" placeholder="Date Début" value="{{ $input['date_debut'] ?? '' }}"/>
-                            @error("date_debut")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="date" class="form-control @error('date_debut') is-invalid @enderror" name="date_debut" id="date_debut" placeholder="Date Début" value="{{ $input['date_debut'] ?? '' }}"/>
+
                         </div>
                         <div class="col-md-2"><button type="submit" class="btn btn-xs btn-success">Filtrer</button></div>
 
@@ -167,10 +161,10 @@
             <div class="col-xl-12 col-lg-12 col-md-12">
 
                 <div class="card o-hidden border-0 shadow-lg my-3">
-                    <div class="card-body p-0">
+                    <div class="card-body p-0  table-responsive">
                         <!-- Nested Row within Card Body -->
                         <div class="row" style="padding:20px;">
-                            <table class="table table-hover">
+                            <table class="table">
                                 <thead>
 
                                 <tr>

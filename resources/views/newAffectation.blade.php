@@ -6,26 +6,30 @@
 
         <form method="post" class="vstack gap-2" action="{{ url('/affectations/new') }}">
             @csrf
-            <div class="form-group">
-                <label for="user_id">Collaborateur</label>
-                <select class="form-control" name="user_id" id="user_id" required>
-                    <option value="">Choisir</option>
-                    @foreach($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                    @endforeach
+            <div class="row">
+                <div class="form-group col">
+                    <label for="user_id">Collaborateur</label>
+                    <select class="form-control" name="user_id" id="user_id" required>
+                        <option value="">Choisir</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                        @endforeach
 
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="restaurants_id">Restaurants</label>
-                <select class="form-control" name="restaurants_id_multi[]" id="restaurants_id" multiple>
-                    <option value="">Choisir</option>
-                    @foreach($restaurants as $restaurant)
-                        <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
-                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="restaurants_id">Restaurants</label>
+                    <select class="form-control col" name="restaurants_id_multi[]" id="restaurants_id" multiple>
+                        <option value="">Choisir</option>
+                        @foreach($restaurants as $restaurant)
+                            <option value="{{ $restaurant->id }}">{{ $restaurant->name }}</option>
+                        @endforeach
 
-                </select>
+                    </select>
+                </div>
             </div>
+
+
             <div class="form-group">
                 <label for="fonctions_id">Fonctions</label>
                 <select class="form-control" name="fonctions_id" id="fonctions_id" required>
@@ -54,8 +58,11 @@
 
             <!-- Submit -->
             <hr>
-            <a href="{{ url('affectations') }}" class="btn btn-primary">Retour</a>
-            <button type="submit" class="btn btn-success">Enregistrer</button>
+            <div class="row gap-2">
+                <a href="{{ url('affectations') }}" class="btn btn-primary col">Retour</a>
+                <button type="submit" class="btn btn-success col">Enregistrer</button>
+            </div>
+
 
 
         </form>

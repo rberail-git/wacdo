@@ -22,26 +22,20 @@
 
             <!-- Filtre Collapse -->
         <div class="row justify-content-center">
-            <form method="post" action="{{ route('restaurants') }}">
+            <form method="post" action="{{ route('restaurants') }}" >
                 @csrf
-                <div id="formFilter" @class(['row collapse','show' => isset($input)])>
+                <div id="formFilter" @class(['row collapse','show' => isset($input) | $errors->any()])>
                     <div class="row" style="padding-left:50px;">
 
 
-                        <div class="col-md-2"><input type="text" class="form-control" name="name" id="name" placeholder="Nom" value="{{ $input['name'] ?? '' }}"/>
-                            @error("name")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Nom" value="{{ $input['name'] ?? '' }}"/>
+
                         </div>
-                        <div class="col-md-2"><input type="text" class="form-control" name="code_postal" id="code_postal" placeholder="Code Postal" value="{{ $input['code_postal'] ?? '' }}"/>
-                            @error("code_postal")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('code_postal') is-invalid @enderror" name="code_postal" id="code_postal" placeholder="Code Postal" value="{{ $input['code_postal'] ?? '' }}"/>
+
                         </div>
-                        <div class="col-md-2"><input type="text" class="form-control" name="ville" id="ville" placeholder="Ville" value="{{ $input['ville'] ?? '' }}"/>
-                            @error("ville")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('ville') is-invalid @enderror" name="ville" id="ville" placeholder="Ville" value="{{ $input['ville'] ?? '' }}"/>
+
                         </div>
                         <div class="col-md-2"><button type="submit" class="btn btn-xs btn-success">Filtrer</button></div>
 
@@ -53,7 +47,7 @@
         <div class="col-xl-12 col-lg-12 col-md-12">
 
             <div class="card o-hidden border-0 shadow-lg my-5">
-                <div class="card-body p-0">
+                <div class="card-body p-0  table-responsive">
                     <!-- Nested Row within Card Body -->
                     <div class="row" style="padding:20px;">
                         <table class="table table-hover">

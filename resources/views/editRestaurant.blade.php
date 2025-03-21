@@ -6,45 +6,26 @@
 
         <form method="post" class="vstack gap-2" action="{{ url('/restaurants/'.$restaurant->id.'/edit') }}">
             @csrf
+            @method('put')
             <!-- Name -->
-            <div class="form-group">
-                <label for="titre">Nom</label>
-                <input type="text" class="form-control" name="name" id="name" value="{{$restaurant->name}}" required/>
-                @error("name")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Nom','name'=>'name','value'=> $restaurant->name])
+
             <!-- Adresse -->
-            <div class="form-group">
-                <label for="titre">Adresse</label>
-                <input type="text" class="form-control" name="adresse" id="adresse" value="{{$restaurant->adresse}}" required/>
-                @error("adresse")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Adresse','name'=>'adresse','value'=> $restaurant->adresse])
 
             <!-- Code Postal -->
-            <div class="form-group">
-                <label for="titre">Code Postal</label>
-                <input type="text" class="form-control" name="code_postal" id="code_postal" value="{{$restaurant->code_postal}}" required/>
-                @error("code_postal")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Code Postal','name'=>'code_postal','value'=> $restaurant->code_postal])
+
             <!-- Ville -->
-            <div class="form-group">
-                <label for="titre">Ville</label>
-                <input type="text" class="form-control" name="ville" id="ville" value="{{$restaurant->ville}}" required/>
-                @error("ville")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Ville','name'=>'ville','value'=> $restaurant->ville])
+
 
 
             <!-- Submit -->
             <hr>
-            <a href="{{ url('restaurants') }}" class="btn btn-primary">Retour</a>
             <button type="submit" class="btn btn-success">Enregistrer</button>
+            <a href="{{ url('restaurants') }}" class="btn btn-primary">Retour</a>
+
 
 
         </form>

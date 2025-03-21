@@ -54,20 +54,16 @@
         <div class="row justify-content-center">
             <form method="post" action="{{url( "/collaborateurs/".$user->id."/detail" )}}">
                 @csrf
-                <div id="formFilter" @class(['row collapse','show' => isset($input)])>
+                <div id="formFilter" @class(['row collapse','show' => isset($input) | $errors->any()])>
                     <div class="row" style="padding-left:50px;">
 
                         <input type="hidden" name="mode" value="{{ $infos['mode'] }}"/>
-                        <div class="col-md-2"><input type="text" class="form-control" name="fonction" id="fonction" placeholder="Poste" value="{{ $input['fonction'] ?? '' }}"/>
-                            @error("name")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="text" class="form-control @error('fonction') is-invalid @enderror" name="fonction" id="fonction" placeholder="Poste" value="{{ $input['fonction'] ?? '' }}"/>
+
                         </div>
                         <div class="col-md-2 text-right pt-1">Date de début :</div>
-                        <div class="col-md-2"><input type="date" class="form-control" name="date_debut" id="date_debut" placeholder="Date Début" value="{{ $input['date_debut'] ?? '' }}"/>
-                            @error("date_debut")
-                            {{ $message }}
-                            @enderror
+                        <div class="col-md-2"><input type="date" class="form-control @error('date_debut') is-invalid @enderror" name="date_debut" id="date_debut" placeholder="Date Début" value="{{ $input['date_debut'] ?? '' }}"/>
+
                         </div>
                         <div class="col-md-2"><button type="submit" class="btn btn-xs btn-success">Filtrer</button></div>
 

@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\Affectations;
-use App\Models\Collaborateurs;
+
 use App\Models\Fonctions;
 use App\Models\Restaurants;
 use App\Models\User;
@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
@@ -43,6 +44,7 @@ class RegisteredUserController extends Controller
             $query->orderBy('affectations.date_debut', 'asc');
             $query->limit(1);
             }])
+            ->where('role','!=','superadmin')
             ->filters(
                 sortBy:$request->sortBy,
                 direction:$request->direction,
@@ -63,7 +65,7 @@ class RegisteredUserController extends Controller
 
         $infos['mode'] = $mode;
 
-//dd($users);
+
         return view('collaborateurs',[ 'users' => $users, 'infos' => $infos]);
     }
     public function showByFilter(FilterRequest $request)
@@ -80,6 +82,7 @@ class RegisteredUserController extends Controller
                 $query->orderBy('affectations.date_debut', 'asc');
                 $query->limit(1);
             }])
+            ->where('role','!=','superadmin')
             ->filters(
                 sortBy:$request->sortBy,
                 direction:$request->direction,
@@ -112,22 +115,51 @@ class RegisteredUserController extends Controller
     }
     public function editUser( User $user)
     {
+        Gate::authorize('edit', $user);
+        $valuePoste = array([$user->role]);
 
-      return view('editCollaborateur', ['user' => $user]);
+
+
+      return view('editCollaborateur', ['user' => $user, 'valuePoste' => $valuePoste] );
     }
 
     public function updateUser( User $user, UserUpdateRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        if($data['role']=='user'){
+            $user->update([
+                'name' => $data['name'],
+                'firstname' => $data['firstname'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+                'password' => null,
 
-        $user->update($data);
+            ]);
+        }else{
+            if($data['password'] == null){
+                $user->update([
+                    'name' => $data['name'],
+                    'firstname' => $data['firstname'],
+                    'email' => $data['email'],
+                    'role' => $data['role'],
+
+                ]);
+            }else{
+                $user->update($data);
+            }
+
+        }
+
+
+
+
 
         return redirect('/collaborateurs')->with('success','Le collaborateur à bien été modifié');
     }
     public function deleteUser( User $user)
     {
 
-
+        Gate::authorize('delete', $user);
         $user->delete();
 
         return redirect('/collaborateurs')->with('success','Le collaborateur à bien été supprimé');
@@ -138,27 +170,28 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(UserUpdateRequest $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'firstname' => ['required', 'string', 'max:255',],
-            'role' => ['required'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => [],
-        ]);
+        $data = $request->validated();
+        if($data['role']=='user') {
+            $user = User::create([
+                'name' => $data['name'],
+                'firstname' => $data['firstname'],
+                'email' => $data['email'],
+                'role' => $data['role'],
 
-        $user = User::create([
-            'name' => $request->name,
-            'firstname' => $request->firstname,
-            'email' => $request->email,
-            'role' => $request->role,
-            'password' => Hash::make($request->password),
-        ]);
+            ]);
+        }else{
+            $user = User::create([
+                'name' => $data['name'],
+                'firstname' => $data['firstname'],
+                'email' => $data['email'],
+                'role' => $data['role'],
+                'password' => Hash::make($data['password']),
+            ]);
+        }
 
-//        event(new Registered($user));
-//
-//        Auth::login($user);
+
 
         return redirect('/collaborateurs')->with('success','Le collaborateur à bien été ajouté');
     }
@@ -268,5 +301,7 @@ class RegisteredUserController extends Controller
         //dd($userDetail);
         return view('detailCollaborateur', ['user' => $user,'input'=>$input,'affectations'=>$affectationsWithActive,'restaurants'=>$restaurants,'fonctions'=>$fonctions, 'infos' => $infos]);
     }
+
+
 
 }

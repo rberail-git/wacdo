@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/restaurants/new', [RestaurantsController::class,'store']);
 
     Route::get('/restaurants/{restaurant}/edit', [RestaurantsController::class,'edit'])->name('editRestaurant');
-    Route::post('/restaurants/{restaurant}/edit', [RestaurantsController::class,'update']);
+    Route::put('/restaurants/{restaurant}/edit', [RestaurantsController::class,'update']);
 
     Route::get('/restaurants/{restaurant}/delete', [RestaurantsController::class,'delete'])->name('deleteRestaurant');
 
@@ -84,5 +84,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/affectations/{affectation}/delete', [AffectationsController::class,'delete'])->name('deleteAffectation');
 
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';

@@ -24,7 +24,7 @@ class FilterRequest extends FormRequest
         return [
             'name' => ['nullable','string', 'min:3'],
             'firstname' => ['nullable','string', 'min:3'],
-            'email' => ['nullable','string', 'min:3'],
+            'email' => ['nullable','string', 'min:3'], // type string pour filtrer sur une adresse mail partielle
             'adresse' => ['nullable','string', 'min:10'],
             'code_postal' => ['nullable','integer', 'regex:/^[0-9]{5}$/'],
             'ville' => ['nullable','string', 'min:3'],
@@ -35,6 +35,26 @@ class FilterRequest extends FormRequest
             'cdi' => ['nullable'],
             'fonctions_id' => ['nullable','integer'],
             'mode' => ['nullable','string'],
+
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'name.min' => 'Le champ doit contenir au moins 3 caractères',
+            'firstname.min' => 'Le champ doit contenir au moins 3 caractères',
+            'email.min' => 'Le champ doit contenir au moins 3 caractères',
+            'adresse.min' => 'Le champ doit contenir au moins 3 caractères',
+            'code_postal.integer' => 'Le champ doit être numérique',
+            'code_postal.regex' => 'Votre saisie ne correspond pas au type du champ',
+            'ville.min' => 'Le champ doit contenir au moins 3 caractères',
+            'fonction.min' => 'Le champ doit contenir au moins 3 caractères',
 
         ];
     }

@@ -7,18 +7,7 @@
         <div class="row justify-content-center">
 
 
-                <form method="post" class="" action="{{ url('/fonctions') }}">
-                    @csrf
-                    <div class="row">
-                    <div class="col-md-4">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Nouvelle Fonction"  required/>
-                        @error("name")
-                        {{ $message }}
-                        @enderror</div>
-                    <div class="col-md-2"><button type="submit" class="btn btn-success">Enregistrer</button></div>
-                    <div class="col-md-6"></div>
-                    </div>
-                </form>
+
 
 
             <div class="col-xl-12 col-lg-12 col-md-12">
@@ -47,7 +36,7 @@
                                                 @csrf
                                                 <tr>
                                                     <th scope="row">{{$oldFonction->id}}</th>
-                                                    <td><input type="text" class="form-control" name="name" id="name" value="{{$oldFonction->name}}" required/></td>
+                                                    <td><input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{$oldFonction->name}}" required/></td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>

@@ -47,10 +47,8 @@
                                         <form method="post" class="" action="{{ url('/fonctions') }}">
                                             @csrf
                                             <td colspan="6">
-                                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nouvelle Fonction"  required/>
-                                                    @error("name")
-                                                    {{ $message }}
-                                                    @enderror
+                                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Nouvelle Fonction" value="{{ old('name') }}"/>
+
                                             </td>
                                             <td><button type="submit" class="btn btn-success">Enregistrer</button></td>
 

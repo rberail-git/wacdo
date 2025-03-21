@@ -7,47 +7,23 @@
         <form method="post" class="vstack gap-2" action="{{ url('/restaurants/new') }}">
             @csrf
             <!-- Name -->
-            <div class="form-group">
-                <label for="name">Nom</label>
-                <input type="text" class="form-control" name="name" id="name"  required/>
-                @error("name")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Nom','name'=>'name'])
+
             <!-- Adresse -->
-            <div class="form-group">
-                <label for="adresse">Adresse</label>
-                <input type="text" class="form-control" name="adresse" id="adresse" required/>
-                @error("adresse")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Adresse','name'=>'adresse'])
 
             <!-- Code Postal -->
-            <div class="form-group">
-                <label for="code_postal">Code Postal</label>
-                <input type="text" class="form-control" name="code_postal" id="code_postal" required/>
-                @error("code_postal")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Code Postal','name'=>'code_postal'])
+
             <!-- Ville -->
-            <div class="form-group">
-                <label for="ville">Ville</label>
-                <input type="text" class="form-control" name="ville" id="ville" required/>
-                @error("ville")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['label'=>'Ville','name'=>'ville'])
+
 
 
             <!-- Submit -->
             <hr>
-            <a href="{{ url('restaurants') }}" class="btn btn-primary">Retour</a>
             <button type="submit" class="btn btn-success">Enregistrer</button>
-
-
-
+            <a href="{{ url('restaurants') }}" class="btn btn-primary">Retour</a>
+        </form>
     </div>
-    </form>
 @endsection

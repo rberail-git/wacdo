@@ -107,6 +107,15 @@ code {
     background-color: #00651d !important;
     border-color: #00651d !important;
 }
+.link-secondary{
+    padding-top:3px;
+    border-top:5px solid darkgreen;
+    font-weight: bold;
+}
+.nav-link a {
+    color: gray !important;
+}
+
 
 @media screen and (min-width: 992px) {
     .hidden-xl {

@@ -30,4 +30,14 @@ class AffectationUpdateRequest extends FormRequest
             'date_fin' => ['nullable','date','after_or_equal:date_debut'],
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'date_debut.date' => 'Le format de la date est invalide',
+            'date_fin.date' => 'Le format de la date est invalide',
+            'date_fin.after_or_equal' => 'La date de fin doit être supérieure ou égale à la date de debut',
+
+
+        ];
+    }
 }

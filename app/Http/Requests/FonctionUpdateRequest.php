@@ -26,4 +26,14 @@ class FonctionUpdateRequest extends FormRequest
             'name' => ['required', 'string', 'max:255','unique:'.Fonctions::class.',name'],
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'name.max' => 'Le champ doit contenir maximum 255 caractères',
+            'name.unique' => 'Cette fonction existe déjà en base de données',
+            'name.required' => 'Ce champ est obligatoire',
+
+
+        ];
+    }
 }

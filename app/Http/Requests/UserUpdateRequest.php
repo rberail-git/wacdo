@@ -24,10 +24,26 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'firstname' => ['required', 'string', 'max:255'],
+            'firstname' => ['string', 'max:255'],
             'role' => ['required'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
-            'password' => []
+            'password' => ['confirmed']
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.max' => 'Le champ Nom doit contenir 255 caractères maximum',
+            'name.required' => 'Le champ Nom est obligatoire',
+            'firstname.max' => 'Le champ Prénom doit contenir 255 caractères maximum',
+            'firstname.required' => 'Le champ Prénom est obligatoire',
+            'email.required' => 'Le champ Adresse Mail est obligatoire',
+            'email.email' => "Le champ Adresse Mail n'est pas valide",
+            'password.confirmed' => 'Les passwords doivent correspondre',
+
+
+
         ];
     }
 }

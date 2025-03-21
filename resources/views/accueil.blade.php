@@ -39,18 +39,14 @@
                                             <div class="form-group">
                                                 <label for="titre">Adresse Mail</label>
                                                 <input type="email" class="form-control" name="email" id="email" required/>
-                                                @error("email")
-                                                {{ $message }}
-                                                @enderror
+
                                             </div>
 
                                             <!-- Password -->
                                             <div class="form-group">
                                                 <label for="titre">Password</label>
                                                 <input type="password" class="form-control" name="password" id="password" />
-                                                @error("password")
-                                                {{ $message }}
-                                                @enderror
+
                                             </div>
 
 
@@ -59,10 +55,10 @@
 
                                             <button type="submit" class="btn btn-success" style="margin-top:20px;">Me connecter</button>
 
-
+                                        </form>
 
                                     </div>
-                                        </form>
+
                                     </div>
                                         @endguest
 
@@ -84,7 +80,5 @@
 
             </div>
 
-        </div>
 
-    </div>
 @endsection

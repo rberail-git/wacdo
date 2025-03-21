@@ -6,51 +6,41 @@
 
         <form method="post" class="vstack gap-2" action="{{ url('/collaborateurs/'.$user->id.'/edit') }}">
             @csrf
+            <div class="row">
             <!-- Name -->
-            <div class="form-group">
-                <label for="titre">Nom</label>
-                <input type="text" class="form-control" name="name" id="name" value="{{$user->name}}" required/>
-                @error("name")
-                {{ $message }}
-                @enderror
-            </div>
+            @include('shared.input',['class'=>'col','label'=>'Nom','name'=>'name','value'=> $user->name])
+
             <!-- Firstname -->
-            <div class="form-group">
-                <label for="titre">Prénom</label>
-                <input type="text" class="form-control" name="firstname" id="firstname" value="{{$user->firstname}}" required/>
+            @include('shared.input',['class'=>'col','label'=>'Prénom','name'=>'firstname','value'=> $user->firstname])
             </div>
+            <div class="row">
             <!-- Email -->
-            <div class="form-group">
-                <label for="titre">Adresse Mail</label>
-                <input type="email" class="form-control" name="email" id="email" value="{{$user->email}}" required/>
-            </div>
+            @include('shared.input',['class'=>'col','label'=>'Adresse Mail','name'=>'email','value'=> $user->email])
+
             <!-- Role -->
-            <div class="form-group">
-                <label for="titre">Rôle</label>
-                <select class="form-control" name="role" id="role" required>
-                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
-                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
-                    <option value="superadmin" {{ $user->role == 'superadmin' ? 'selected' : '' }}>Superadmin</option>
-                </select>
+                @if(Auth::User()->role == 'superadmin')
+                    @include('shared.select',['class'=>'col','label'=>'Rôle','name'=>'role','options'=>['user'=>'User','admin'=>'Admin','superadmin'=>'SuperAdmin'],'value'=>$valuePoste])
+                @else
+                    @include('shared.select',['class'=>'col','label'=>'Rôle','name'=>'role','options'=>['user'=>'User','admin'=>'Admin'],'value'=>$valuePoste])
+                @endif
             </div>
+            <div class="row">
             <!-- Password -->
-            <div class="form-group">
-                <label for="titre">Password</label>
-                <input type="password" class="form-control" name="password" id="password" />
-            </div>
+            @include('shared.input',['class'=>'col','type'=>'password','label'=>'Password','name'=>'password'])
+
             <!-- Password -->
-            <div class="form-group">
-                <label for="titre">Confirmer Password</label>
-                <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" />
+            @include('shared.input',['class'=>'col','type'=>'password','label'=>'Confirmer Password','name'=>'password_confirmation'])
             </div>
 
             <!-- Submit -->
             <hr>
-            <a href="{{ url('collaborateurs') }}" class="btn btn-primary">Retour</a>
-            <button type="submit" class="btn btn-success">Enregistrer</button>
-
+            <div class="row gap-2">
+            <a href="{{ url('collaborateurs') }}" class="btn btn-primary col">Retour</a>
+            <button type="submit" class="btn btn-success col">Enregistrer</button>
+            </div>
+        </form>
 
 
     </div>
-    </form>
+
 @endsection

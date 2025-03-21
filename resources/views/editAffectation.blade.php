@@ -69,8 +69,10 @@
 
             <!-- Submit -->
             <hr>
-            <a href="{{ url('affectations') }}" class="btn btn-primary">Retour</a>
-            <button type="submit" class="btn btn-success">Enregistrer</button>
+            <div class="row gap-2">
+                <a href="{{ url('affectations') }}" class="btn btn-primary col">Retour</a>
+                <button type="submit" class="btn btn-success col">Enregistrer</button>
+            </div>
 
 
         </form>

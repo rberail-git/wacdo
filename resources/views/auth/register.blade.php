@@ -4,65 +4,45 @@
     <div class="container">
         <h1>Nouveau Collaborateur</h1><hr>
 
-    <form method="post" class="vstack gap-2" action="{{ route('newCollaborateur') }}">
-        @csrf
-        <!-- Name -->
-        <div class="form-group">
-            <label for="titre">Nom</label>
-            <input type="text" class="form-control" name="name" id="name" required/>
-            @error("name")
-                {{ $message }}
-            @enderror
-        </div>
-        <!-- Firstname -->
-        <div class="form-group">
-            <label for="titre">Prénom</label>
-            <input type="text" class="form-control" name="firstname" id="firstname" required/>
-            @error("firstname")
-            {{ $message }}
-            @enderror
-        </div>
-        <!-- Email -->
-        <div class="form-group">
-            <label for="titre">Adresse Mail</label>
-            <input type="email" class="form-control" name="email" id="email" required/>
-            @error("email")
-            {{ $message }}
-            @enderror
-        </div>
-        <!-- Role -->
-        <div class="form-group">
-            <label for="titre">Rôle</label>
-            <select class="form-control" name="role" id="role" required>
-                <option value="user">User</option>
-                <option value="admin">Admin</option>
-                <option value="superadmin">Superadmin</option>
-            </select>
-        </div>
-        <!-- Password -->
-        <div class="form-group">
-            <label for="titre">Password</label>
-            <input type="password" class="form-control" name="password" id="password" />
-            @error("password")
-            {{ $message }}
-            @enderror
-        </div>
-        <!-- Password -->
-        <div class="form-group">
-            <label for="titre">Confirmer Password</label>
-            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" />
-            @error("password_confirmation")
-            {{ $message }}
-            @enderror
-        </div>
+        <form method="post" class="vstack gap-2" action="{{ route('newCollaborateur') }}">
+            @csrf
+            <div class="row">
+            <!-- Name -->
+            @include('shared.input',['class'=>'col','label'=>'Nom','name'=>'name'])
 
-        <!-- Submit -->
-       <hr>
-            <a href="{{ url('collaborateurs') }}" class="btn btn-primary">Retour</a>
-            <button type="submit" class="btn btn-success">Enregistrer</button>
+            <!-- Firstname -->
+            @include('shared.input',['class'=>'col','label'=>'Prénom','name'=>'firstname'])
+            </div>
+            <div class="row">
+            <!-- Email -->
+            @include('shared.input',['class'=>'col','label'=>'Adresse Mail','name'=>'email'])
+
+            <!-- Role -->
+                @if(Auth::User()->role == 'superadmin')
+                    @include('shared.select',['class'=>'col','label'=>'Rôle','name'=>'role','options'=>['user'=>'User','admin'=>'Admin','superadmin'=>'SuperAdmin'],'multiple'=>false])
+                @else
+                    @include('shared.select',['class'=>'col','label'=>'Rôle','name'=>'role','options'=>['user'=>'User','admin'=>'Admin'],'multiple'=>false])
+                @endif
+            </div>
+            <div class="row">
+                <!-- Password -->
+                @include('shared.input',['class'=>'col','type'=>'password','label'=>'Password','name'=>'password'])
+
+                <!-- Password Confirm -->
+                @include('shared.input',['class'=>'col','type'=>'password','label'=>'Confirmer Password','name'=>'password_confirmation'])
+            </div>
 
 
 
-        </div>
-    </form>
+            <!-- Submit -->
+           <hr>
+            <div class="row gap-2">
+                <a href="{{ url('collaborateurs') }}" class="btn btn-primary col">Retour</a>
+                <button type="submit" class="btn btn-success col">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+
+
+
 @endsection

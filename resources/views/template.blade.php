@@ -9,8 +9,9 @@
 
     <title>WACDO Gestion</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-Ez0cGzNzHR1tYAv56860NLspgUGuQw16GiOOp/I2LuTmpSK9xDXlgJz3XN4cnpXWDmkNBKXR/VDMTCnAaEooxA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <!-- Custom styles for this template -->
 
     <link href="{{ asset('css/base.css') }}" rel="stylesheet">
@@ -26,23 +27,26 @@
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
                 <img src="{{ asset('img/wacdo_logo.jpg') }}" style="width:50px;"/>
             </a>
+@php
+$route = request() -> route() -> getName();
+@endphp
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
 
-                <li><a @class(['nav-link','px-2','link-secondary' => request() -> route() -> getName() == 'accueil']) href="{{ url('/') }}" class="nav-link px-2 link-dark" >Accueil</a></li>
-                <li><a @class(['nav-link','px-2','link-secondary' => request() -> route() -> getName() == 'restaurants']) href="{{ url('/restaurants') }}" class="nav-link px-2 link-dark">Restaurants</a></li>
-                <li><a @class(['nav-link','px-2','link-secondary' => request() -> route() -> getName() == 'collaborateurs']) href="{{ url('/collaborateurs') }}" class="nav-link px-2 link-dark">Collaborateurs</a></li>
-                <li><a @class(['nav-link','px-2','link-secondary' => request() -> route() -> getName() == 'fonctions']) href="{{ url('/fonctions') }}" class="nav-link px-2 link-dark">Fonctions</a></li>
-                <li><a @class(['nav-link','px-2','link-secondary' => request() -> route() -> getName() == 'affectations']) href="{{ url('/affectations') }}" class="nav-link px-2 link-dark">Affectations</a></li>
+                <li><a @class(['nav-link px-2','link-secondary' => str_contains($route,'accueil')]) href="{{ url('/') }}" class="nav-link px-2 link-dark" >Accueil</a></li>
+                <li><a @class(['nav-link','px-2','link-secondary' => str_contains($route,'estaurant')]) href="{{ url('/restaurants') }}" class="nav-link px-2 link-dark">Restaurants</a></li>
+                <li><a @class(['nav-link','px-2','link-secondary' => str_contains($route,'ollaborateur')]) href="{{ url('/collaborateurs') }}" class="nav-link px-2 link-dark">Collaborateurs</a></li>
+                <li><a @class(['nav-link','px-2','link-secondary' => str_contains($route,'fonction')]) href="{{ url('/fonctions') }}" class="nav-link px-2 link-dark">Fonctions</a></li>
+                <li><a @class(['nav-link','px-2','link-secondary' => str_contains($route,'ffectation')]) href="{{ url('/affectations') }}" class="nav-link px-2 link-dark">Affectations</a></li>
             </ul>
 
-                <div class="dropdown text-end" style="padding-left:0x;">
+                <div class="dropdown text-end" style="padding-left:0px;">
                     <a href="{{ url('/login') }}" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                         <span style="padding-right: 10px;">{{\Illuminate\Support\Facades\Auth::user()->name }} {{\Illuminate\Support\Facades\Auth::user()->firstname}}</span>
                         <i class="fa-solid fa-user"></i>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="{{ url('/profile') }}">Mon profil</a></li>
+
                         <li><form action="{{ route('logout') }}" method="post">
 
                                 @csrf
@@ -64,6 +68,16 @@
             {{session('success')}}
         </div>
     @endif
+    @if(($errors->any()))
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading"><i class="fa-solid fa-circle-exclamation"></i> Erreurs</h4>
+            <ul class="my-0">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     @yield('content')
 
 
@@ -81,7 +95,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.1/js/bootstrap.bundle.min.js" integrity="sha512-sH8JPhKJUeA9PWk3eOcOl8U+lfZTgtBXD41q6cO/slwxGHCxKcW45K4oPCUhHG7NMB4mbKEddVmPuTXtpbCbFA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-
+<script>
+    new TomSelect('select[multiple]',{plugins: {remove_button: {title: 'Supprimer'}}})
+</script>
 
 </body>
 </html>
