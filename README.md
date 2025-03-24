@@ -1,10 +1,9 @@
 <p align="center"><a href="https://www.wacdo.atelier-zeppleen.fr" target="_blank"><img src="public/img/wacdo_logo.jpg" width="200" alt="Laravel Logo"></a></p>
 
 <p align="center">
-<a href=""><img src="https://img.shields.io/badge/Framework-Laravel_11-red" alt="Build Status"></a>
+<a href=""><img src="https://img.shields.io/badge/Framework-Laravel_11-red" alt="Framework Laravel"></a>
 <a href=""><img src="https://img.shields.io/github/last-commit/rberail-git/wacdo" alt="last commit"></a>
-<a href=""><img src="https://img.shields.io/badge/Contexte-Formation%20Laravel-blue
-" alt="Contexte"></a>
+<a href=""><img src="https://img.shields.io/badge/Contexte-Formation%20Laravel-blue" alt="Contexte"></a>
 </p>
 
 ## A propos
