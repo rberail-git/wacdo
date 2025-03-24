@@ -11,14 +11,13 @@ use App\Models\Fonctions;
 use App\Models\Restaurants;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Database\Eloquent\Builder;
+
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller

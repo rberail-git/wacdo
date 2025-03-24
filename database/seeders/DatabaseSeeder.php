@@ -6,7 +6,7 @@ use App\Models\Affectations;
 use App\Models\Fonctions;
 use App\Models\Restaurants;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,7 +25,15 @@ class DatabaseSeeder extends Seeder
         $user->firstname="admin";
         $user->email="super@admin.com";
         $user->role="superadmin";
-        $user->password=Hash::make("admin");
+        $user->password=Hash::make("superadmin1234");
+        $user->save();
+
+        $user = new User();
+        $user->name="ADMIN";
+        $user->firstname="admin";
+        $user->email="admin@admin.com";
+        $user->role="admin";
+        $user->password=Hash::make("admin1234");
         $user->save();
 
         $user = new User();

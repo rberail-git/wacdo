@@ -46,7 +46,7 @@ $route = request() -> route() -> getName();
                         <i class="fa-solid fa-user"></i>
                     </a>
                     <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-
+                        <li><a href="{{ url('/profile') }}" class="btn nav-link p-2">Mon profil</a></li>
                         <li><form action="{{ route('logout') }}" method="post">
 
                                 @csrf
@@ -78,6 +78,7 @@ $route = request() -> route() -> getName();
             </ul>
         </div>
     @endif
+
     @yield('content')
 
 
